@@ -8,8 +8,12 @@ class BaseBox {
 		this.outputs = outputs
 		this.colour = colour
 	}
-	draw(coords) {
+	draw(coords, held) {
 		let size = this.calcSize
+		if (held) {
+			ctx.fillStyle = '#000000'
+			ctx.fillRect(coords[0]-5, coords[1]+5, size[0], size[1]+20)
+		}
 		ctx.fillStyle = this.colour
 		ctx.fillRect(coords[0], coords[1], size[0], 20)
 		ctx.fillStyle = '#777777'
