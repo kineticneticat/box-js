@@ -1,5 +1,6 @@
 .config
 venv
+.venv
 .replit
 replit.nix
 .upm
