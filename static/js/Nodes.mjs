@@ -18,6 +18,8 @@ class BaseBox {
 		ctx.fillRect(coords[0], coords[1], size[0], 20)
 		ctx.fillStyle = '#777777'
 		ctx.fillRect(coords[0], coords[1]+20, size[0], size[1])
+		this.outputs.forEach((e, i) => e.draw(coords, i))
+		this.inputs.forEach((e, i) => e.draw(coords, i, this.outputs.length))
 	}
 	get calcSize() {
 		//margin = 2

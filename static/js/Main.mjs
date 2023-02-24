@@ -4,11 +4,13 @@ export let canvas = document.getElementById('canvas')
 export let ctx = canvas.getContext('2d')
 export let clickPos = []
 export let mousePos = []
+export let offset = []
 // document.getElementById('out').innerHTML = 'hey leo'
 canvas.addEventListener('mousedown', e => {
 	clickPos = [e.clientX-8, e.clientY-8]
 	for (let i in boxes) {
 		i=parseInt(i)
+		offset = [boxes[i].coords[0]-clickPos[0], boxes[i].coords[1]-clickPos[1]]
 		boxes[i].check(clickPos, i)
 	}
 	reDraw()
