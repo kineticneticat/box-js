@@ -3,7 +3,8 @@ import {OStringSlice} from '../js/OutputNubs.mjs'
 import {ctx} from '../js/Main.mjs'
 
 class BaseBox {
-	constructor(inputs, outputs, colour) {
+	constructor(label, inputs, outputs, colour) {
+		this.label = label
 		this.inputs = inputs
 		this.outputs = outputs
 		this.colour = colour
@@ -12,14 +13,25 @@ class BaseBox {
 		let size = this.calcSize
 		if (held) {
 			ctx.fillStyle = '#000000'
-			ctx.fillRect(coords[0]-5, coords[1]+5, size[0], size[1]+20)
+			ctx.fillRect(coords[0], coords[1], size[0], size[1]+20)
+			ctx.fillStyle = this.colour
+			ctx.fillRect(coords[0]+5, coords[1]-5, size[0], 20)
+			ctx.fillStyle = '#777777'
+			ctx.fillRect(coords[0]+5, coords[1]+20-5, size[0], size[1])
+			ctx.fillStyle = '#000000'
+			ctx.textAlign = 'left'
+			ctx.fillText(this.label, coords[0]+10, coords[1])
+		} else {
+			ctx.fillStyle = this.colour
+			ctx.fillRect(coords[0], coords[1], size[0], 20)
+			ctx.fillStyle = '#777777'
+			ctx.fillRect(coords[0], coords[1]+20, size[0], size[1])
+			ctx.fillStyle = '#000000'
+			ctx.textAlign = 'left'
+			ctx.fillText(this.label, coords[0]+10, coords[1]+15)
 		}
-		ctx.fillStyle = this.colour
-		ctx.fillRect(coords[0], coords[1], size[0], 20)
-		ctx.fillStyle = '#777777'
-		ctx.fillRect(coords[0], coords[1]+20, size[0], size[1])
-		this.outputs.forEach((e, i) => e.draw(coords, i))
-		this.inputs.forEach((e, i) => e.draw(coords, i, this.outputs.length))
+		this.outputs.forEach((e, i) => e.draw(coords, size, i))
+		this.inputs.forEach((e, i) => e.draw(coords, size, i, this.outputs.length))
 	}
 	get calcSize() {
 		//margin = 2
@@ -38,12 +50,15 @@ class BaseBox {
 
 export class ValuesToCssCode extends BaseBox {
 	constructor() {
-        super([
+        super(
+			'Values to CSS Code',
+		[
 			new INumberSlice('Red'),
 			new INumberSlice('Green'),
 			new INumberSlice('Blue')
 		], [
 			new OStringSlice('Css Code'),
-		], '#0000ff')
+			new OStringSlice('Css Code'),
+		], '#3333ff')
     }
 }
