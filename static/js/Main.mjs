@@ -9,8 +9,7 @@ export let offset = []
 canvas.addEventListener('mousedown', e => {
 	clickPos = [e.clientX-8, e.clientY-8]
 	for (let i in boxes) {
-		i=parseInt(i)
-		
+		i=parseInt(i)		
 		boxes[i].check(clickPos, i)
 	}
 	reDraw()
@@ -49,6 +48,8 @@ class Box {
 			offset = [boxes[i].coords[0]-clickPos[0], boxes[i].coords[1]-clickPos[1]]
 			clickHistory.push(clickHistory.splice(clickHistory.indexOf(i), 1)[0]);
 			this.held = true
+			this.box.outputs.forEach((e, i) => e.check(coords, size, i))
+		this.box.inputs.forEach((e, i) => e.check(coords, size, i, this.box.outputs.length))
 			
 		}
 	}

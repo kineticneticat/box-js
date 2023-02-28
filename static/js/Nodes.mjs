@@ -11,25 +11,18 @@ class BaseBox {
 	}
 	draw(coords, held) {
 		let size = this.calcSize
+		ctx.fillStyle = '#000000aa'
+		ctx.fillRect(coords[0], coords[1], size[0], size[1]+20)
 		if (held) {
-			ctx.fillStyle = '#000000'
-			ctx.fillRect(coords[0], coords[1], size[0], size[1]+20)
-			ctx.fillStyle = this.colour
-			ctx.fillRect(coords[0]+5, coords[1]-5, size[0], 20)
-			ctx.fillStyle = '#777777'
-			ctx.fillRect(coords[0]+5, coords[1]+20-5, size[0], size[1])
-			ctx.fillStyle = '#000000'
-			ctx.textAlign = 'left'
-			ctx.fillText(this.label, coords[0]+10, coords[1])
-		} else {
-			ctx.fillStyle = this.colour
-			ctx.fillRect(coords[0], coords[1], size[0], 20)
-			ctx.fillStyle = '#777777'
-			ctx.fillRect(coords[0], coords[1]+20, size[0], size[1])
-			ctx.fillStyle = '#000000'
-			ctx.textAlign = 'left'
-			ctx.fillText(this.label, coords[0]+10, coords[1]+15)
+			coords = [coords[0]+5, coords[1]-5]
 		}
+		ctx.fillStyle = this.colour
+		ctx.fillRect(coords[0], coords[1], size[0], 20)
+		ctx.fillStyle = '#777777'
+		ctx.fillRect(coords[0], coords[1]+20, size[0], size[1])
+		ctx.fillStyle = '#000000'
+		ctx.textAlign = 'left'
+		ctx.fillText(this.label, coords[0]+10, coords[1]+15)
 		this.outputs.forEach((e, i) => e.draw(coords, size, i))
 		this.inputs.forEach((e, i) => e.draw(coords, size, i, this.outputs.length))
 	}
